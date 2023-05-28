@@ -1,12 +1,12 @@
 import { makeAutoObservable } from 'mobx'
 
-interface ITodo {
+export interface ITodo {
     id: number,
     title: string,
     completed: boolean,
 }
 
-class Store {
+export class Store {
     todos: ITodo[] = []
     newTodoTitle: string = '';
 
@@ -25,6 +25,11 @@ class Store {
         this.newTodoTitle = ''
         console.log({...this.todos})
         
+    }
+
+    deleteTodo(todo: ITodo) {
+        this.todos.filter((t) => t.id != todo.id)
+        console.log(this.todos)
     }
 
     constructor() {
