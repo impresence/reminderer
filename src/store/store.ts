@@ -4,15 +4,29 @@ export interface ITodo {
     id: number,
     title: string,
     completed: boolean,
+    description: string,
+    date: string,
+    color: string
 }
 
 export class Store {
     todos: ITodo[] = []
-    newTodoTitle: string = '';
+    newTodoTitle: string = ''
+    newTodoDesc: string = ''
+    newTodoDate: string = ''
+    newTodoColor: string = ''
 
     setNewTodoTitle(e: React.ChangeEvent<HTMLInputElement>): void {
         this.newTodoTitle = e.target.value
-        console.log(this.newTodoTitle)
+    }
+    setNewTodoDesc(e: React.ChangeEvent<HTMLTextAreaElement>):void {
+        this.newTodoDesc = e.target.value
+    }
+    setNewTodoDate(e: React.ChangeEvent<HTMLInputElement>):void {
+        this.newTodoDate = e.target.value
+    }
+    setNewTodoColor(e: React.ChangeEvent<HTMLSelectElement>) {
+        this.newTodoColor = e.target.value
     }
 
     addTodo() {
@@ -20,6 +34,9 @@ export class Store {
             id: Math.round(Math.random() * 1000),
             title: this.newTodoTitle,
             completed: false,
+            description: this.newTodoDesc,
+            date: this.newTodoDate,
+            color: this.newTodoColor
         }
         this.todos.push(newTodo)
         this.newTodoTitle = ''
