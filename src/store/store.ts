@@ -26,9 +26,9 @@ export class Store {
         console.log({...this.todos})
         
     }
-
+    
     deleteTodo(todo: ITodo) {
-        this.todos.filter((t) => t.id != todo.id)
+        this.todos = this.todos.filter((t) => todo.id != t.id)
         console.log(this.todos)
     }
 
