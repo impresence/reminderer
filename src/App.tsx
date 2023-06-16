@@ -4,6 +4,7 @@ import Login from './components/Login';
 import { Routes, Route } from 'react-router-dom'
 import TodoList from './components/TodoList';
 import TodoForm from './components/TodoForm';
+import Main from './components/Main'
 
 
 function App() {
@@ -11,12 +12,13 @@ function App() {
   return (
 		<>
 			<div className="App">
-                <TodoForm/>
-                {/* <TodoList/> */}
 			</div>
-			<Routes>
+			<Routes>  
+        <Route path='/' element={<Main/>} />
 				<Route path='/login' element={<Login/>} />
 				<Route path='/register' element={<Register/>} />
+        <Route path='/create' element={<TodoForm/>} />
+        <Route path='/list' element={<TodoList/>} />
 			</Routes>
 		</>
   )

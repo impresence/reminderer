@@ -1,25 +1,21 @@
 "use strict";
-var __assign = (this && this.__assign) || function () {
-    __assign = Object.assign || function(t) {
-        for (var s, i = 1, n = arguments.length; i < n; i++) {
-            s = arguments[i];
-            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
-                t[p] = s[p];
-        }
-        return t;
-    };
-    return __assign.apply(this, arguments);
-};
 exports.__esModule = true;
 exports.store = exports.Store = void 0;
 var mobx_1 = require("mobx");
 var Store = /** @class */ (function () {
     function Store() {
+        var _this = this;
         this.todos = [];
         this.newTodoTitle = '';
         this.newTodoDesc = '';
         this.newTodoDate = '';
-        this.newTodoColor = '';
+        this.newTodoDay = '';
+        this.newTodoColor = '#DCDCDC';
+        this.getDayOfWeek = function () {
+            var d = new Date(exports.store.newTodoDate);
+            var week = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+            _this.newTodoDay = week[d.getDay()];
+        };
         mobx_1.makeAutoObservable(this);
     }
     Store.prototype.setNewTodoTitle = function (e) {
@@ -30,22 +26,28 @@ var Store = /** @class */ (function () {
     };
     Store.prototype.setNewTodoDate = function (e) {
         this.newTodoDate = e.target.value;
+        this.getDayOfWeek();
     };
     Store.prototype.setNewTodoColor = function (e) {
         this.newTodoColor = e.target.value;
     };
     Store.prototype.addTodo = function () {
-        var newTodo = {
-            id: Math.round(Math.random() * 1000),
-            title: this.newTodoTitle,
-            completed: false,
-            description: this.newTodoDesc,
-            date: this.newTodoDate,
-            color: this.newTodoColor
-        };
-        this.todos.push(newTodo);
-        this.newTodoTitle = '';
-        console.log(__assign({}, this.todos));
+        if (this.newTodoTitle.trim().length > 0 || this.newTodoDate) {
+            var newTodo = {
+                id: Math.round(Math.random() * 1000),
+                title: this.newTodoTitle.trim(),
+                completed: false,
+                description: this.newTodoDesc,
+                date: this.newTodoDate,
+                day: this.newTodoDay,
+                color: this.newTodoColor
+            };
+            this.todos.push(newTodo);
+            this.newTodoTitle = '';
+            this.newTodoDesc = '';
+            this.newTodoDate = '';
+            this.newTodoColor = '#BBC6FF';
+        }
     };
     Store.prototype.deleteTodo = function (todo) {
         this.todos = this.todos.filter(function (t) { return todo.id != t.id; });

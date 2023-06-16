@@ -1,4 +1,4 @@
-import { makeAutoObservable } from 'mobx'
+import { makeAutoObservable, reaction } from 'mobx'
 
 export interface ITodo {
     id: number,
@@ -6,6 +6,7 @@ export interface ITodo {
     completed: boolean,
     description: string,
     date: string,
+    day: string,
     color: string
 }
 
@@ -14,7 +15,9 @@ export class Store {
     newTodoTitle: string = ''
     newTodoDesc: string = ''
     newTodoDate: string = ''
-    newTodoColor: string = ''
+    newTodoDay: string = ''
+    newTodoColor: string = '#DCDCDC'
+
 
     setNewTodoTitle(e: React.ChangeEvent<HTMLInputElement>): void {
         this.newTodoTitle = e.target.value
@@ -24,24 +27,36 @@ export class Store {
     }
     setNewTodoDate(e: React.ChangeEvent<HTMLInputElement>):void {
         this.newTodoDate = e.target.value
+        this.getDayOfWeek()
     }
-    setNewTodoColor(e: React.ChangeEvent<HTMLSelectElement>) {
+    setNewTodoColor(e: React.ChangeEvent<HTMLSelectElement>):void {
         this.newTodoColor = e.target.value
     }
 
     addTodo() {
-        const newTodo: ITodo = {
-            id: Math.round(Math.random() * 1000),
-            title: this.newTodoTitle,
-            completed: false,
-            description: this.newTodoDesc,
-            date: this.newTodoDate,
-            color: this.newTodoColor
+        if (this.newTodoTitle.trim().length > 0 || this.newTodoDate) {            
+            const newTodo: ITodo = {
+                id: Math.round(Math.random() * 1000),
+                title: this.newTodoTitle.trim(),
+                completed: false,
+                description: this.newTodoDesc,
+                date: this.newTodoDate,
+                day: this.newTodoDay,
+                color: this.newTodoColor
+            }
+            this.todos.push(newTodo)
+            this.newTodoTitle = ''
+            this.newTodoDesc = ''
+            this.newTodoDate = ''
+            this.newTodoColor = '#BBC6FF'
+            this.saveToLS()
         }
-        this.todos.push(newTodo)
-        this.newTodoTitle = ''
-        console.log({...this.todos})
-        
+    }
+
+    getDayOfWeek = () => {
+        const d = new Date(store.newTodoDate) 
+        const week = ['Sunday','Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
+        this.newTodoDay = week[d.getDay()]
     }
     
     deleteTodo(todo: ITodo) {
@@ -49,8 +64,16 @@ export class Store {
         console.log(this.todos)
     }
 
+    saveToLS = () => {
+      localStorage.setItem('todos',JSON.stringify(this.todos))
+    }
+
     constructor() {
         makeAutoObservable(this)
+
+        reaction(() => this.todos, this.saveToLS)
+        const todos = localStorage.getItem('todos')
+        this.todos = todos ? JSON.parse(todos) : []
     }
 }
 
