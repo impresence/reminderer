@@ -5,18 +5,36 @@ export interface ITodo {
     title: string,
     completed: boolean,
     description: string,
-    date: string,
+    date: Date,
     day: string,
-    color: string
+    color: string,
+    // hrs: number,
+    // mnts: number,
+    // dateOfMonth: number,
+    // month: number,
+    // year: number
 }
 
 export class Store {
     todos: ITodo[] = []
     newTodoTitle: string = ''
     newTodoDesc: string = ''
-    newTodoDate: string = ''
+    newTodoDate: any = new Date()
     newTodoDay: string = ''
     newTodoColor: string = '#DCDCDC'
+    // newTodoHrs: number = this.newTodoDate.getHours()
+    // newTodoMnts: number = this.newTodoDate.getMinutes()
+    // newTodoDateOfMonth: number = this.newTodoDate.getDate()
+    // newTodoMonth: number = this.newTodoDate.getMonth()
+    // newTodoYear: number = this.newTodoDate.getFullYear()
+    
+    dateData = {
+      GetHours() {return store.newTodoDate.getHours()},
+      GetMinutes() {return store.newTodoDate.getMinutes()},
+      GetD() {return store.newTodoDate.getDate()},
+      GetM() {return store.newTodoDate.getMonth()},
+      GetY() {return store.newTodoDate.getFullYear()},
+    }
 
 
     setNewTodoTitle(e: React.ChangeEvent<HTMLInputElement>): void {
@@ -26,8 +44,11 @@ export class Store {
         this.newTodoDesc = e.target.value
     }
     setNewTodoDate(e: React.ChangeEvent<HTMLInputElement>):void {
-        this.newTodoDate = e.target.value
-        this.getDayOfWeek()
+      // if (e.target.value.trim().length > 0) {
+        this.newTodoDate = new Date(e.target.value);
+        this.getDayOfWeek();
+        console.log(this.newTodoDate);
+      // }
     }
     setNewTodoColor(e: React.ChangeEvent<HTMLSelectElement>):void {
         this.newTodoColor = e.target.value
@@ -42,16 +63,30 @@ export class Store {
                 description: this.newTodoDesc,
                 date: this.newTodoDate,
                 day: this.newTodoDay,
-                color: this.newTodoColor
+                color: this.newTodoColor,
+                // hrs: this.newTodoHrs,
+                // mnts: this.newTodoMnts,
+                // dateOfMonth: this.newTodoDateOfMonth,
+                // month: this.newTodoMonth,
+                // year: this.newTodoYear
             }
             this.todos.push(newTodo)
             this.newTodoTitle = ''
             this.newTodoDesc = ''
-            this.newTodoDate = ''
+            this.newTodoDate = new Date()
             this.newTodoColor = '#BBC6FF'
             this.saveToLS()
+            // this.calculateDateRelatedValues()
         }
     }
+
+    // calculateDateRelatedValues = () => {
+    //   this.newTodoHrs = this.newTodoDate.getHours()
+    //   this.newTodoMnts = this.newTodoDate.getMinutes()
+    //   this.newTodoDateOfMonth = this.newTodoDate.getDate()
+    //   this.newTodoMonth = this.newTodoDate.getMonth()
+    //   this.newTodoYear = this.newTodoDate.getFullYear()
+    // }
 
     getDayOfWeek = () => {
         const d = new Date(store.newTodoDate) 

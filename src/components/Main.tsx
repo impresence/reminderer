@@ -7,7 +7,6 @@ const Main: React.FC = () => {
     <div
     style={{background: `url(${mainBg})`, backgroundSize: 'cover'}} 
     className='flex justify-center bg-theme-blue w-screen h-screen overflow-hidden'>
-      {/* <img className='absolute h-full' src={mainBg} alt='Main page' /> */}
       <div className='flex flex-col items-center justify-center relative top-[58%] sm:top-auto w-full max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8'>
         <h1 className='mt-8 text-5xl font-bold text-white text-center'>
           Reminderer

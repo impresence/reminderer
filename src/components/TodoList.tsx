@@ -29,9 +29,10 @@ const TodoList: React.FC = () => {
                 <h2 
                 className=' m-8 text-right'>
                     <span className='font-bold mx-3'>
-                    {todo.day}
+                      {store.newTodoDay}
                     </span>
-                    {todo.date}
+                      {`${todo.date.getHours()}:${todo.date.getMinutes()} `}
+                      {`${todo.date.getDate()} / ${todo.date.getMonth() + 1} / ${todo.date.getFullYear()}`}
                 </h2>
             </div>
             ))}

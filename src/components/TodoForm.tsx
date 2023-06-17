@@ -4,15 +4,16 @@ import { store } from '../store/store'
 import { ITodo } from '../store/store'
 import { Link } from 'react-router-dom'
 
+
 const TodoForm: React.FC = () => {
-
-  const isValid = store.newTodoTitle.length >= 2 && store.newTodoDesc.length >= 2 && store.newTodoDate.length > 0
-
-    const handleAdd = () => {
-        if (isValid) {
-            store.addTodo()
-        }
+  
+  const isValid = store.newTodoTitle.length >= 2 && store.newTodoDesc.length >= 2 && store.newTodoDate
+  
+  const handleAdd = () => {
+    if (isValid) {
+      store.addTodo()
     }
+  }
 
     
     return (
@@ -30,14 +31,14 @@ const TodoForm: React.FC = () => {
                 <h2 
                 className=' m-8 text-right'>
                     <span className='font-bold mx-3'>
-                    {store.newTodoDay}
+                      {store.newTodoDay}
                     </span>
-                    {store.newTodoDate} 
+                    {`${store.dateData.GetHours()}:${store.dateData.GetMinutes()} `}
+                    {`${store.dateData.GetD()} / ${store.dateData.GetM() + 1} / ${store.dateData.GetY()}`}
                 </h2>
-            </div>
+            </div> 
             <div className='w-10/12 grid grid-cols-3 my-6 gap-7'>
                 <input 
-                name='title'
                 className='border text-xl m-1 rounded-lg h-16 p-1' 
                 value={store.newTodoTitle} 
                 onChange={(e) => store.setNewTodoTitle(e)}
@@ -46,7 +47,6 @@ const TodoForm: React.FC = () => {
                 type="text" 
                 />
                 <textarea 
-                name='description'
                 className=' text-xl border m-1 row-span-2 rounded-lg p-1 overflow-auto resize-none'
                 value={store.newTodoDesc}
                 onChange={(e) => store.setNewTodoDesc(e)}
@@ -65,15 +65,16 @@ const TodoForm: React.FC = () => {
                     <option value='#F5D88D' className=' bg-[#F5D88D]'>Yellow</option>
                 </select>
                 <input 
-                name='date'
                 className='border m-1 rounded-lg h-16 p-1'
                 onChange={(e) => store.setNewTodoDate(e)}
-                type="date" 
+                type="datetime-local" 
+                min="2018-06-07T00:00"
+                max="2030-06-07T00:00"
                 />
                 <div className=' text-red-600'>
                     {store.newTodoTitle.length < 2 ? <div>! Title min length is 2 symbols</div> : <div> </div>}
                     {store.newTodoDesc.length < 2 && <div>! Description min length is 2 symbols</div>}
-                    {store.newTodoDate.length < 2 && <div>! Choose date for reminding</div>}
+                    {store.newTodoDate && <div>! Choose date for reminding</div>}
                 </div>
             </div>
                 <Link className='mt-8' to='/list'> 
