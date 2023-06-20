@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom'
 
 const TodoForm: React.FC = () => {
   
-  const isValid = store.newTodoTitle.length >= 2 && store.newTodoDesc.length >= 2 && store.newTodoDate
+  const isValid = store.newTodoTitle.length >= 2 && store.newTodoDesc.length >= 2
   
   const handleAdd = () => {
     if (isValid) {
@@ -74,7 +74,6 @@ const TodoForm: React.FC = () => {
                 <div className=' text-red-600'>
                     {store.newTodoTitle.length < 2 ? <div>! Title min length is 2 symbols</div> : <div> </div>}
                     {store.newTodoDesc.length < 2 && <div>! Description min length is 2 symbols</div>}
-                    {store.newTodoDate && <div>! Choose date for reminding</div>}
                 </div>
             </div>
                 <Link className='mt-8' to='/list'> 

@@ -14,11 +14,18 @@ const Main: React.FC = () => {
         <h2 className='mt-4 text-lg font-bold text-white text-center max-w-2xl'>
           Simple To-Do List that reminds with Telegram message
         </h2>
+          <div className='flex gap-4'>
         <Link to='/create'>
           <button className='mt-8 text-lg text-theme-blue bg-white px-10 py-3 font-semibold rounded-xl hover:text-white hover:bg-btn-blue-hover transition ease-in-out'>
             Get Started
           </button>
         </Link>
+        <Link to='/register'>
+          <button className='mt-8 text-lg text-theme-blue bg-white px-10 py-3 font-semibold rounded-xl hover:text-white hover:bg-btn-blue-hover transition ease-in-out'>
+            Sign-in
+          </button>
+        </Link>
+          </div>
       </div>
     </div>
   );

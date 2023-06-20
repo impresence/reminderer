@@ -8,11 +8,6 @@ export interface ITodo {
     date: Date,
     day: string,
     color: string,
-    // hrs: number,
-    // mnts: number,
-    // dateOfMonth: number,
-    // month: number,
-    // year: number
 }
 
 export class Store {
@@ -22,11 +17,6 @@ export class Store {
     newTodoDate: any = new Date()
     newTodoDay: string = ''
     newTodoColor: string = '#DCDCDC'
-    // newTodoHrs: number = this.newTodoDate.getHours()
-    // newTodoMnts: number = this.newTodoDate.getMinutes()
-    // newTodoDateOfMonth: number = this.newTodoDate.getDate()
-    // newTodoMonth: number = this.newTodoDate.getMonth()
-    // newTodoYear: number = this.newTodoDate.getFullYear()
     
     dateData = {
       GetHours() {return store.newTodoDate.getHours()},
@@ -44,11 +34,9 @@ export class Store {
         this.newTodoDesc = e.target.value
     }
     setNewTodoDate(e: React.ChangeEvent<HTMLInputElement>):void {
-      // if (e.target.value.trim().length > 0) {
         this.newTodoDate = new Date(e.target.value);
         this.getDayOfWeek();
         console.log(this.newTodoDate);
-      // }
     }
     setNewTodoColor(e: React.ChangeEvent<HTMLSelectElement>):void {
         this.newTodoColor = e.target.value
@@ -64,11 +52,6 @@ export class Store {
                 date: this.newTodoDate,
                 day: this.newTodoDay,
                 color: this.newTodoColor,
-                // hrs: this.newTodoHrs,
-                // mnts: this.newTodoMnts,
-                // dateOfMonth: this.newTodoDateOfMonth,
-                // month: this.newTodoMonth,
-                // year: this.newTodoYear
             }
             this.todos.push(newTodo)
             this.newTodoTitle = ''
@@ -76,17 +59,8 @@ export class Store {
             this.newTodoDate = new Date()
             this.newTodoColor = '#BBC6FF'
             this.saveToLS()
-            // this.calculateDateRelatedValues()
         }
     }
-
-    // calculateDateRelatedValues = () => {
-    //   this.newTodoHrs = this.newTodoDate.getHours()
-    //   this.newTodoMnts = this.newTodoDate.getMinutes()
-    //   this.newTodoDateOfMonth = this.newTodoDate.getDate()
-    //   this.newTodoMonth = this.newTodoDate.getMonth()
-    //   this.newTodoYear = this.newTodoDate.getFullYear()
-    // }
 
     getDayOfWeek = () => {
         const d = new Date(store.newTodoDate) 
@@ -109,6 +83,10 @@ export class Store {
         reaction(() => this.todos, this.saveToLS)
         const todos = localStorage.getItem('todos')
         this.todos = todos ? JSON.parse(todos) : []
+        this.todos = this.todos.map(todo => {
+          todo.date = new Date(todo.date)
+          return todo
+        })
     }
 }
 
