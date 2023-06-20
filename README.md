@@ -9,5 +9,5 @@
     <li>React-router-dom</li> 
   </ul>
 </p> <br>
-<a href="">Demo</a>
+<h2><a href="https://reminderer.vercel.app/">Demo</a></h2>
 <p>В будущем хочу добавить больше анимаций, валидацию форм и регистрацию</p>
